@@ -16,7 +16,7 @@ function ProductGridItem({ id, name, url, size, price }) {
           <p className="text-gray-800 font-semibold text-xs">{price}</p>
           <Button
             variant="outline"
-            className="cursor-pointer w-16 h-8 border border-solid border-green-500 text-green-500 font-semibold text-sm bg-green-50 rounded-md"
+            className="cursor-pointer w-16 h-8 border border-solid text-primary font-semibold text-sm bg-muted rounded-md"
           >
             ADD
           </Button>
