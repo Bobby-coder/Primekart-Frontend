@@ -17,5 +17,5 @@ export function getTotalDiscount(productList) {
     return acc + originalPrice;
   }, 0);
 
-  return totalOriginalPrice - totalDiscountedPrice;
+  return Math.round(totalOriginalPrice - totalDiscountedPrice);
 }
