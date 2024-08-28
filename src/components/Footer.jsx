@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 function Footer() {
   return (
-    <footer className="text-muted-foreground py-8 px-6 md:px-8 lg:px-10">
+    <footer className="text-muted-foreground py-8 px-6 md:px-8 lg:px-10 border-t  border-muted">
       <div className="container mx-auto grid md:grid-cols-2 lg:grid-cols-4 gap-8">
         <div className="space-y-2">
           <h3 className="text-lg font-semibold">Company</h3>
