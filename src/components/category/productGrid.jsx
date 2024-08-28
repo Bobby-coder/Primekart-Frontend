@@ -1,225 +1,37 @@
+import { useEffect, useState } from "react";
 import { ScrollArea } from "../ui/scroll-area";
 import ProductGridItem from "./productGridItem";
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function ProductGrid() {
-  const data = {};
-  let isLoading = false;
-  let error = false;
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(null);
+  const [error, setError] = useState(null);
+  const selectedCategory = useParams().name;
+  const { sortBy, order } = useSelector((state) => state.sorting);
 
-  let sortFunction;
-  /* if (sortType === "priceAscending") {
-    sortFunction = (a, b) => a.price - b.price;
-  }
-
-  if (sortType === "priceDscending") {
-    sortFunction = (a, b) => b.price - a.price;
-  }
-
-  // We can omit comparator function while sorting any string in ascending order because if we comparator function is omitted Array.prototype.sort() by default performes sorting on lexicographical order, it means it compares the ascii codes, so a string gets sorted in alphabetical order.
-  if (sortType === "nameAscending") {
-    sortFunction = (a, b) => a.name.localeCompare(b.name);
-    //sortFunction = null
-  } */
-
-  function handleFilter(brandName, minPrice, maxPrice, sortFunction) {
-    let filteredProducts = data?.products || [];
-
-    // Filter by brand name
-    if (brandName && brandName.length > 0) {
-      filteredProducts = filteredProducts.filter((product) => {
-        return brandName.includes(product.brand);
+  useEffect(() => {
+    setLoading(true);
+    axios
+      .get(
+        `https://dummyjson.com/products/category/${selectedCategory}?sortBy=${sortBy}&order=${order}`
+      )
+      .then((res) => {
+        setLoading(false);
+        setProducts(res.data.products);
+      })
+      .catch((err) => {
+        setLoading(false);
+        setError(err);
       });
-    }
-
-    // Filter by price range
-    if (minPrice && maxPrice) {
-      filteredProducts = filteredProducts.filter(
-        (product) => product.price >= minPrice && product.price <= maxPrice
-      );
-    }
-
-    // Sort the filtered products
-    if (sortFunction) {
-      return filteredProducts?.slice().sort(sortFunction);
-    }
-
-    // return filteredProducts;
-    return [
-      {
-        id: 989,
-        name: "colgate",
-        size: 18,
-        price: 78,
-        url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVgIeFDSxX555fP0KFZvh9BMAiDwdEUZkMhA&s",
-      },
-      {
-        id: 989,
-        name: "colgate",
-        size: 18,
-        price: 78,
-        url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVgIeFDSxX555fP0KFZvh9BMAiDwdEUZkMhA&s",
-      },
-      {
-        id: 989,
-        name: "colgate",
-        size: 18,
-        price: 78,
-        url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVgIeFDSxX555fP0KFZvh9BMAiDwdEUZkMhA&s",
-      },
-      {
-        id: 989,
-        name: "colgate",
-        size: 18,
-        price: 78,
-        url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVgIeFDSxX555fP0KFZvh9BMAiDwdEUZkMhA&s",
-      },
-      {
-        id: 989,
-        name: "colgate",
-        size: 18,
-        price: 78,
-        url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVgIeFDSxX555fP0KFZvh9BMAiDwdEUZkMhA&s",
-      },
-      {
-        id: 989,
-        name: "colgate",
-        size: 18,
-        price: 78,
-        url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVgIeFDSxX555fP0KFZvh9BMAiDwdEUZkMhA&s",
-      },
-      {
-        id: 989,
-        name: "colgate",
-        size: 18,
-        price: 78,
-        url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVgIeFDSxX555fP0KFZvh9BMAiDwdEUZkMhA&s",
-      },
-      {
-        id: 989,
-        name: "colgate",
-        size: 18,
-        price: 78,
-        url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVgIeFDSxX555fP0KFZvh9BMAiDwdEUZkMhA&s",
-      },
-      {
-        id: 989,
-        name: "colgate",
-        size: 18,
-        price: 78,
-        url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVgIeFDSxX555fP0KFZvh9BMAiDwdEUZkMhA&s",
-      },
-      {
-        id: 989,
-        name: "colgate",
-        size: 18,
-        price: 78,
-        url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVgIeFDSxX555fP0KFZvh9BMAiDwdEUZkMhA&s",
-      },
-      {
-        id: 989,
-        name: "colgate",
-        size: 18,
-        price: 78,
-        url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVgIeFDSxX555fP0KFZvh9BMAiDwdEUZkMhA&s",
-      },
-      {
-        id: 989,
-        name: "colgate",
-        size: 18,
-        price: 78,
-        url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVgIeFDSxX555fP0KFZvh9BMAiDwdEUZkMhA&s",
-      },
-      {
-        id: 989,
-        name: "colgate",
-        size: 18,
-        price: 78,
-        url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVgIeFDSxX555fP0KFZvh9BMAiDwdEUZkMhA&s",
-      },
-      {
-        id: 989,
-        name: "colgate",
-        size: 18,
-        price: 78,
-        url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVgIeFDSxX555fP0KFZvh9BMAiDwdEUZkMhA&s",
-      },
-      {
-        id: 989,
-        name: "colgate",
-        size: 18,
-        price: 78,
-        url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVgIeFDSxX555fP0KFZvh9BMAiDwdEUZkMhA&s",
-      },
-      {
-        id: 989,
-        name: "colgate",
-        size: 18,
-        price: 78,
-        url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVgIeFDSxX555fP0KFZvh9BMAiDwdEUZkMhA&s",
-      },
-      {
-        id: 989,
-        name: "colgate",
-        size: 18,
-        price: 78,
-        url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVgIeFDSxX555fP0KFZvh9BMAiDwdEUZkMhA&s",
-      },
-      {
-        id: 989,
-        name: "colgate",
-        size: 18,
-        price: 78,
-        url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVgIeFDSxX555fP0KFZvh9BMAiDwdEUZkMhA&s",
-      },
-      {
-        id: 989,
-        name: "colgate",
-        size: 18,
-        price: 78,
-        url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVgIeFDSxX555fP0KFZvh9BMAiDwdEUZkMhA&s",
-      },
-      {
-        id: 989,
-        name: "colgate",
-        size: 18,
-        price: 78,
-        url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVgIeFDSxX555fP0KFZvh9BMAiDwdEUZkMhA&s",
-      },
-      {
-        id: 989,
-        name: "colgate",
-        size: 18,
-        price: 78,
-        url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVgIeFDSxX555fP0KFZvh9BMAiDwdEUZkMhA&s",
-      },
-      {
-        id: 989,
-        name: "colgate",
-        size: 18,
-        price: 78,
-        url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVgIeFDSxX555fP0KFZvh9BMAiDwdEUZkMhA&s",
-      },
-      {
-        id: 989,
-        name: "colgate",
-        size: 18,
-        price: 78,
-        url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVgIeFDSxX555fP0KFZvh9BMAiDwdEUZkMhA&s",
-      },
-      {
-        id: 989,
-        name: "colgate",
-        size: 18,
-        price: 78,
-        url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVgIeFDSxX555fP0KFZvh9BMAiDwdEUZkMhA&s",
-      },
-    ];
-  }
+  }, [selectedCategory, sortBy, order]);
 
   return (
-    <ScrollArea className="h-[90vh]">
+    <ScrollArea className="h-[calc(100vh-140px)]">
       <div className="grid grid-cols-2 gap-2 p-2 bg-[#f4f6fb] lg:grid-cols-5">
-        {isLoading ? (
+        {loading ? (
           <p>Loading...</p>
         ) : error ? (
           <div className="text-center">
@@ -227,14 +39,11 @@ function ProductGrid() {
           </div>
         ) : (
           <>
-            {handleFilter().map(({ _id, name, size, price, url }) => (
+            {products.map((product) => (
               <ProductGridItem
-                key={crypto.randomUUID()}
-                id={_id}
-                name={name}
-                size={size}
-                price={price}
-                url={url}
+                key={product.id}
+                product={product}
+                selectedCategory={selectedCategory}
               />
             ))}
           </>
@@ -245,4 +54,3 @@ function ProductGrid() {
 }
 
 export default ProductGrid;
-// grid grid-cols-2 gap-2 p-2 bg-[#f4f6fb] lg:grid-cols-5

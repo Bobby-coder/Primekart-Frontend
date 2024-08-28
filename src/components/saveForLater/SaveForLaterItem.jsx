@@ -1,7 +1,27 @@
 import { getOriginalPrice } from "@/utils/getOriginalPrice";
 import { Button } from "../ui/button";
+import { useDispatch } from "react-redux";
+import { removeFromSavedItems } from "@/store/features/saveForLater/saveForLaterSlice";
+import { addToCart } from "@/store/features/cart/cartSlice";
 
-function SaveForLaterItem({ name, img, price, discountPercentage }) {
+function SaveForLaterItem({
+  savedItem: { id, title, thumbnail, price, discountPercentage },
+}) {
+  const dispatch = useDispatch();
+
+  // Handler to remove item from saved items
+  function handleRemoveFromSavedItems() {
+    dispatch(removeFromSavedItems(id));
+  }
+
+  // Handler to add item to cart and remove from saved items
+  function handleMoveToCart() {
+    // add to cart
+    dispatch(addToCart({ id, title, thumbnail, price, discountPercentage }));
+    // remove from saved items
+    handleRemoveFromSavedItems();
+  }
+
   const originalPrice = getOriginalPrice(discountPercentage, price);
   return (
     <div className="flex flex-col gap-6 p-4">
@@ -11,13 +31,13 @@ function SaveForLaterItem({ name, img, price, discountPercentage }) {
           alt="Product image"
           className="aspect-square rounded-md object-cover"
           height="80"
-          src={img}
+          src={thumbnail}
           width="80"
         />
 
         <div className="flex flex-col gap-3">
           {/*Name*/}
-          <p className="font-semibold">{name}</p>
+          <p className="font-semibold">{title}</p>
           {/*Price & Discount*/}
           <div className="flex items-center gap-1">
             <p className="line-through text-muted-foreground text-[14px]">
@@ -32,10 +52,18 @@ function SaveForLaterItem({ name, img, price, discountPercentage }) {
       </div>
 
       <div className="flex gap-[6px] items-center">
-        <Button variant="ghost" className="text-md font-semibold">
+        <Button
+          variant="ghost"
+          className="text-md font-semibold"
+          onClick={handleMoveToCart}
+        >
           MOVE TO CART
         </Button>
-        <Button variant="ghost" className="text-md font-semibold">
+        <Button
+          variant="ghost"
+          className="text-md font-semibold"
+          onClick={handleRemoveFromSavedItems}
+        >
           REMOVE
         </Button>
       </div>

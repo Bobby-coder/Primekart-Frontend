@@ -1,27 +1,83 @@
+import { getAmountInINR } from "@/utils/getAmountInINR";
 import { Button } from "../ui/button";
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addToCart } from "@/store/features/cart/cartSlice";
+import Image from "../Image";
+import WishlistIcon from "../wishlist/WishlistIcon";
+import toast from "react-hot-toast";
+import AddedToCartToast from "../customToasts/AddedToCartToast";
+import { Star } from "lucide-react";
 
-function ProductGridItem({ id, name, url, size, price }) {
+function ProductGridItem({
+  product: {
+    id,
+    title,
+    thumbnail,
+    price,
+    discountPercentage,
+    category,
+    rating,
+  },
+  selectedCategory,
+}) {
+  const dispatch = useDispatch();
+  const priceInINR = getAmountInINR(price);
+
+  // Handler to add item to cart
+  function handleAddtoCart() {
+    dispatch(addToCart({ id, title, thumbnail, price, discountPercentage }));
+    //
+    toast.custom((t) => (
+      <AddedToCartToast t={t} thumbnail={thumbnail} title={title} />
+    ));
+  }
+
   return (
-    <div className="flex flex-col items-center pb-[0.75rem] bg-white border border-solid border-gray-200 cursor-pointer">
-      <div className="overflow-hidden">
-        <img src={url} alt="product-image" className="object-fill w-full" />
+    <div className="flex flex-col items-center pb-[0.75rem] bg-white border border-solid border-gray-200 relative">
+      {/* Image */}
+      <Link to={`/category/${selectedCategory}/${id}`}>
+        <div className="overflow-hidden">
+          <Image src={thumbnail} alt="product-image" />
+        </div>
+      </Link>
+
+      {/* Title */}
+      <div className="w-full flex flex-col gap-1 px-[0.75rem]">
+        <div className="overflow-hidden text-gray-800 font-semibold text-sm w-full h-9 mb-1 leading-[18px] whitespace-normal line-clamp-2">
+          {title}
+        </div>
+
+        {/* Price & rating */}
+        <div className="flex justify-between items-center">
+          <p className="text-gray-800 font-semibold text-xs sm:text-sm">
+            ₹{priceInINR}
+          </p>
+          {/*Rating*/}
+          {rating > 0 && (
+            <div className="flex items-center p-2 text-xs sm:text-sm text-yellow-500 rounded-md">
+              <Star className="w-4 h-4 fill-current mr-[2px]" />
+              <span className="text-black">{rating.toFixed(1)}</span>
+            </div>
+          )}
+        </div>
       </div>
 
-      <div className="flex flex-col gap-1 px-[0.75rem]">
-        <div className="overflow-hidden text-gray-800 font-semibold text-sm w-full h-9 mb-1 leading-[18px] whitespace-normal line-clamp-2">
-          {name}
-        </div>
-        <p className="text-xs mb-[1px]">{size}</p>
-        <div className="flex justify-between items-center">
-          <p className="text-gray-800 font-semibold text-xs">{price}</p>
-          <Button
-            variant="outline"
-            className="cursor-pointer w-16 h-8 border border-solid text-primary font-semibold text-sm bg-muted rounded-md"
-          >
-            ADD
-          </Button>
-        </div>
-      </div>
+      {/*Added to cart button*/}
+      <Button
+        variant="outline"
+        className="cursor-pointer h-8 border border-solid text-primary font-semibold text-sm bg-muted rounded-none w-[90%] mt-2"
+        onClick={handleAddtoCart}
+      >
+        ADD
+      </Button>
+
+      {/*Wishlist Icon*/}
+      <WishlistIcon
+        productId={id}
+        product={{ id, title, thumbnail, price, discountPercentage, category }}
+        position="absolute top-2 right-2"
+      />
     </div>
   );
 }

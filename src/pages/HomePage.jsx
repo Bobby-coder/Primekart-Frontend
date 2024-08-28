@@ -1,12 +1,34 @@
 import banner from "../assets/banner-1.png";
 import WhyChooseUs from "@/components/home/WhyChooseUs";
 import CategoryCard from "@/components/home/CategoryCard";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCategories } from "@/store/features/category/categorySlice";
+import { categoryImages } from "@/utils/categoryImages";
 
 export default function HomePage() {
+  const dispatch = useDispatch();
+  let { items, status } = useSelector((state) => state.category);
+
+  // dispatch category thunk to fetch categories
+  useEffect(() => {
+    if (status === "idle") {
+      dispatch(fetchCategories());
+    }
+  }, [dispatch, status]);
+
+  // add image to each category
+  items = items.map((currItem, i) => {
+    return {
+      ...currItem,
+      thumbnail: `https://cdn.dummyjson.com/products/images/${categoryImages[i]}/thumbnail.png`,
+    };
+  });
+
   return (
     <div className="flex flex-col min-h-[100dvh]">
       <main className="flex-1">
-        {/**/}
+        {/*Banner*/}
         <section className="bg-primary py-12 md:py-16 lg:py-20 px-6 md:px-8 lg:px-10">
           <div className="container mx-auto grid md:grid-cols-2 gap-8 items-center">
             <div className="space-y-4">
@@ -43,9 +65,16 @@ export default function HomePage() {
                 Browse our selection of top-selling product categories.
               </p>
             </div>
+            
             {/* Category grid */}
             <div className="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-10 gap-4 mt-8">
-              <CategoryCard />
+              {items.map(({ name, thumbnail }) => (
+                <CategoryCard
+                  key={crypto.randomUUID()}
+                  name={name}
+                  thumbnail={thumbnail}
+                />
+              ))}
             </div>
           </div>
         </section>

@@ -1,113 +1,28 @@
+import { useSelector } from "react-redux";
 import WishlistItem from "./WishlistItem";
 
 function WishlistGrid() {
-  const data = [
-    {
-      name: "Air Jordan 1 Low FlyEase",
-      img: "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/u_126ab356-44d8-4a06-89b4-fcdcc8df0245,c_scale,fl_relative,w_1.0,h_1.0,fl_layer_apply/a94e182a-5a7a-476f-b68b-dad036220e9e/AIR+JORDAN+1+LOW+FLYEASE.png",
-      price: 1200,
-      discountPercentage: 18,
-    },
-    {
-      name: "Air Jordan 1 Low FlyEase",
-      img: "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/u_126ab356-44d8-4a06-89b4-fcdcc8df0245,c_scale,fl_relative,w_1.0,h_1.0,fl_layer_apply/a94e182a-5a7a-476f-b68b-dad036220e9e/AIR+JORDAN+1+LOW+FLYEASE.png",
-      price: 1200,
-      discountPercentage: 18,
-    },
-    {
-      name: "Air Jordan 1 Low FlyEase",
-      img: "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/u_126ab356-44d8-4a06-89b4-fcdcc8df0245,c_scale,fl_relative,w_1.0,h_1.0,fl_layer_apply/a94e182a-5a7a-476f-b68b-dad036220e9e/AIR+JORDAN+1+LOW+FLYEASE.png",
-      price: 1200,
-      discountPercentage: 18,
-    },
-    {
-      name: "Air Jordan 1 Low FlyEase",
-      img: "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/u_126ab356-44d8-4a06-89b4-fcdcc8df0245,c_scale,fl_relative,w_1.0,h_1.0,fl_layer_apply/a94e182a-5a7a-476f-b68b-dad036220e9e/AIR+JORDAN+1+LOW+FLYEASE.png",
-      price: 1200,
-      discountPercentage: 18,
-    },
-    {
-      name: "Air Jordan 1 Low FlyEase",
-      img: "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/u_126ab356-44d8-4a06-89b4-fcdcc8df0245,c_scale,fl_relative,w_1.0,h_1.0,fl_layer_apply/a94e182a-5a7a-476f-b68b-dad036220e9e/AIR+JORDAN+1+LOW+FLYEASE.png",
-      price: 1200,
-      discountPercentage: 18,
-    },
-    {
-      name: "Air Jordan 1 Low FlyEase",
-      img: "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/u_126ab356-44d8-4a06-89b4-fcdcc8df0245,c_scale,fl_relative,w_1.0,h_1.0,fl_layer_apply/a94e182a-5a7a-476f-b68b-dad036220e9e/AIR+JORDAN+1+LOW+FLYEASE.png",
-      price: 1200,
-      discountPercentage: 18,
-    },
-    {
-      name: "Air Jordan 1 Low FlyEase",
-      img: "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/u_126ab356-44d8-4a06-89b4-fcdcc8df0245,c_scale,fl_relative,w_1.0,h_1.0,fl_layer_apply/a94e182a-5a7a-476f-b68b-dad036220e9e/AIR+JORDAN+1+LOW+FLYEASE.png",
-      price: 1200,
-      discountPercentage: 18,
-    },
-    {
-      name: "Air Jordan 1 Low FlyEase",
-      img: "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/u_126ab356-44d8-4a06-89b4-fcdcc8df0245,c_scale,fl_relative,w_1.0,h_1.0,fl_layer_apply/a94e182a-5a7a-476f-b68b-dad036220e9e/AIR+JORDAN+1+LOW+FLYEASE.png",
-      price: 1200,
-      discountPercentage: 18,
-    },
-    {
-      name: "Air Jordan 1 Low FlyEase",
-      img: "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/u_126ab356-44d8-4a06-89b4-fcdcc8df0245,c_scale,fl_relative,w_1.0,h_1.0,fl_layer_apply/a94e182a-5a7a-476f-b68b-dad036220e9e/AIR+JORDAN+1+LOW+FLYEASE.png",
-      price: 1200,
-      discountPercentage: 18,
-    },
-    {
-      name: "Air Jordan 1 Low FlyEase",
-      img: "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/u_126ab356-44d8-4a06-89b4-fcdcc8df0245,c_scale,fl_relative,w_1.0,h_1.0,fl_layer_apply/a94e182a-5a7a-476f-b68b-dad036220e9e/AIR+JORDAN+1+LOW+FLYEASE.png",
-      price: 1200,
-      discountPercentage: 18,
-    },
-    {
-      name: "Air Jordan 1 Low FlyEase",
-      img: "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/u_126ab356-44d8-4a06-89b4-fcdcc8df0245,c_scale,fl_relative,w_1.0,h_1.0,fl_layer_apply/a94e182a-5a7a-476f-b68b-dad036220e9e/AIR+JORDAN+1+LOW+FLYEASE.png",
-      price: 1200,
-      discountPercentage: 18,
-    },
-    {
-      name: "Air Jordan 1 Low FlyEase",
-      img: "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/u_126ab356-44d8-4a06-89b4-fcdcc8df0245,c_scale,fl_relative,w_1.0,h_1.0,fl_layer_apply/a94e182a-5a7a-476f-b68b-dad036220e9e/AIR+JORDAN+1+LOW+FLYEASE.png",
-      price: 1200,
-      discountPercentage: 18,
-    },
-    {
-      name: "Air Jordan 1 Low FlyEase",
-      img: "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/u_126ab356-44d8-4a06-89b4-fcdcc8df0245,c_scale,fl_relative,w_1.0,h_1.0,fl_layer_apply/a94e182a-5a7a-476f-b68b-dad036220e9e/AIR+JORDAN+1+LOW+FLYEASE.png",
-      price: 1200,
-      discountPercentage: 18,
-    },
-    {
-      name: "Air Jordan 1 Low FlyEase",
-      img: "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/u_126ab356-44d8-4a06-89b4-fcdcc8df0245,c_scale,fl_relative,w_1.0,h_1.0,fl_layer_apply/a94e182a-5a7a-476f-b68b-dad036220e9e/AIR+JORDAN+1+LOW+FLYEASE.png",
-      price: 1200,
-      discountPercentage: 18,
-    },
-    {
-      name: "Air Jordan 1 Low FlyEase",
-      img: "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/u_126ab356-44d8-4a06-89b4-fcdcc8df0245,c_scale,fl_relative,w_1.0,h_1.0,fl_layer_apply/a94e182a-5a7a-476f-b68b-dad036220e9e/AIR+JORDAN+1+LOW+FLYEASE.png",
-      price: 1200,
-      discountPercentage: 18,
-    },
-  ];
+  // Extract wishlist from store
+  const { items } = useSelector((state) => state.wishlist);
+  console.log({category:items})
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
-      {data &&
-        data.length &&
-        data.map(({ name, price, img, discountPercentage }) => {
+      {items.map(
+        ({ id, title, price, thumbnail, discountPercentage, category }) => {
           return (
             <WishlistItem
-              key={crypto.randomUUID()}
-              name={name}
+              id={id}
+              key={id}
+              title={title}
               price={price}
-              img={img}
+              thumbnail={thumbnail}
               discountPercentage={discountPercentage}
+              category={category}
             />
           );
-        })}
+        }
+      )}
     </div>
   );
 }
