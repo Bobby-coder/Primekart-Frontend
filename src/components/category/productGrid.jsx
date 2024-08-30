@@ -40,11 +40,7 @@ function ProductGrid() {
         ) : (
           <>
             {products.map((product) => (
-              <ProductGridItem
-                key={product.id}
-                product={product}
-                selectedCategory={selectedCategory}
-              />
+              <ProductGridItem key={product.id} product={product} />
             ))}
           </>
         )}

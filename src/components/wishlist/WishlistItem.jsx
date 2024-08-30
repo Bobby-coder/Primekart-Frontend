@@ -10,12 +10,7 @@ import RemovedFromWishlist from "../customToasts/RemovedFromWishList";
 import { useNavigate } from "react-router-dom";
 
 function WishlistItem({
-  id,
-  title,
-  thumbnail,
-  price,
-  discountPercentage,
-  category,
+  product: { id, title, thumbnail, price, discountPercentage, category },
 }) {
   const dispatch = useDispatch();
   const originalPrice = getOriginalPrice(discountPercentage, price);

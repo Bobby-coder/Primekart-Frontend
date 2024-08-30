@@ -8,6 +8,7 @@ import WishlistIcon from "../wishlist/WishlistIcon";
 import toast from "react-hot-toast";
 import AddedToCartToast from "../customToasts/AddedToCartToast";
 import { Star } from "lucide-react";
+import { useDrag } from "react-dnd";
 
 function ProductGridItem({
   product: {
@@ -19,7 +20,6 @@ function ProductGridItem({
     category,
     rating,
   },
-  selectedCategory,
 }) {
   const dispatch = useDispatch();
   const priceInINR = getAmountInINR(price);
@@ -33,10 +33,22 @@ function ProductGridItem({
     ));
   }
 
+  // drag product to cart or wishlist
+  const [{ isDragging }, drop] = useDrag({
+    type: "PRODUCT",
+    item: { id, title, thumbnail, price, discountPercentage },
+    collect: (monitor) => ({ isDragging: monitor.isDragging() }),
+  });
+
   return (
-    <div className="flex flex-col items-center pb-[0.75rem] bg-white border border-solid border-gray-200 relative">
+    <div
+      ref={drop}
+      className={`flex flex-col items-center pb-[0.75rem] bg-white border border-solid border-gray-200 relative ${
+        isDragging && "opacity-50"
+      }`}
+    >
       {/* Image */}
-      <Link to={`/category/${selectedCategory}/${id}`}>
+      <Link to={`/category/${category}/${id}`}>
         <div className="overflow-hidden">
           <Image src={thumbnail} alt="product-image" />
         </div>

@@ -12,18 +12,24 @@ import { Share } from "lucide-react";
 import ReviewSection from "@/components/review/ReviewSection";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ImageSection from "@/components/ImageSection";
 import RatingsInfo from "@/components/review/RatingsInfo";
 import { getOriginalPrice } from "@/utils/getOriginalPrice";
 import WishlistIcon from "@/components/wishlist/WishlistIcon";
 import { slugIntoName } from "@/utils/getNameFromSlug";
+import { useDispatch } from "react-redux";
+import { addToCart } from "@/store/features/cart/cartSlice";
+import toast from "react-hot-toast";
+import AddedToCartToast from "@/components/customToasts/AddedToCartToast";
 
 function ProductDetailPage() {
   const [productData, setProductData] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const { productId } = useParams();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setLoading(true);
@@ -54,7 +60,26 @@ function ProductDetailPage() {
   // Capitalized brand name
   const capitalizedCategory = slugIntoName(productData?.category);
 
-  function handleAddToCart() {}
+  // Handler to add product to cart
+  function handleAddToCart() {
+    dispatch(
+      addToCart({
+        id: productData.id,
+        title: productData.title,
+        thumbnail: productData.thumbnail,
+        price: productData.price,
+        discountPercentage: productData.discountPercentage,
+      })
+    );
+    //
+    toast.custom((t) => (
+      <AddedToCartToast
+        t={t}
+        title={productData.title}
+        thumbnail={productData.thumbnail}
+      />
+    ));
+  }
   return (
     <>
       {loading ? (
@@ -161,7 +186,11 @@ function ProductDetailPage() {
 
               {/*Checkout buttons*/}
               <div className="flex gap-3 w-full items-center">
-                <Button size="lg" className="">
+                <Button
+                  size="lg"
+                  className=""
+                  onClick={() => navigate("/cart")}
+                >
                   Buy now
                 </Button>
                 <Button size="lg" className="" onClick={handleAddToCart}>
