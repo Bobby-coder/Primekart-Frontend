@@ -5,12 +5,15 @@ import ProductDetailPage from "./pages/ProductDetailPage";
 import CartPage from "./pages/CartPage";
 import WishlistPage from "./pages/WishlistPage";
 import Footer from "./components/Footer";
-import Header from "./components/Header";
+import Header from "./components/header/Header";
 import CategoryNavbar from "./components/home/CategoryNavbar";
+import SearchPage from "./pages/SearchPage";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   return (
     <>
+      <ScrollToTop />
       <Header />
       <CategoryNavbar />
       <Routes>
@@ -22,6 +25,7 @@ function App() {
         />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/wishlist" element={<WishlistPage />} />
+        <Route path="/search" element={<SearchPage />} />
       </Routes>
       <Footer />
     </>
