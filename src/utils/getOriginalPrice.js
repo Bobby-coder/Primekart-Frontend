@@ -7,5 +7,3 @@ export function getOriginalPrice(discountPercentage, priceAfterDiscount) {
 
   return Math.round(originalPrice);
 }
-
-console.log(getOriginalPrice(11.44, 125))
