@@ -9,6 +9,7 @@ import Header from "./components/header/Header";
 import CategoryNavbar from "./components/home/CategoryNavbar";
 import SearchPage from "./pages/SearchPage";
 import ScrollToTop from "./components/ScrollToTop";
+import PageNotFound from "./pages/PageNotFound";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="/cart" element={<CartPage />} />
         <Route path="/wishlist" element={<WishlistPage />} />
         <Route path="/search" element={<SearchPage />} />
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
       <Footer />
     </>
