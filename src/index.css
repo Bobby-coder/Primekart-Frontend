@@ -69,6 +69,13 @@
   }
 }
 
+/* Reseting CSS */
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 /* Hide the spinner controls in WebKit browsers (Chrome, Safari) */
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
