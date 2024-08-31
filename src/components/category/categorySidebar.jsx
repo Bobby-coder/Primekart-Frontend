@@ -25,7 +25,7 @@ function CategorySidebar() {
   });
 
   return (
-    <ScrollArea className="h-[calc(100vh-80px)] w-[30%] border-r lg:flex lg:flex-col lg:gap-2 lg:w-64">
+    <ScrollArea className="h-[calc(100vh-120px)] w-[30%] border-r lg:flex lg:flex-col lg:gap-2 lg:w-64">
       {status === "loading" ? (
         <p>Loading...</p>
       ) : status === "failed" ? (

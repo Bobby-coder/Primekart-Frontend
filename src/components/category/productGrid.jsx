@@ -29,7 +29,7 @@ function ProductGrid() {
   }, [selectedCategory, sortBy, order]);
 
   return (
-    <ScrollArea className="h-[calc(100vh-140px)]">
+    <ScrollArea className="h-[calc(100vh-180px)]">
       <div className="grid grid-cols-2 gap-2 p-2 bg-[#f4f6fb] lg:grid-cols-5">
         {loading ? (
           <p>Loading...</p>

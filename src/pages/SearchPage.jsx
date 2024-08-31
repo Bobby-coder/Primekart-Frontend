@@ -32,7 +32,7 @@ function SearchPage() {
   }
 
   return (
-    <div className="mx-auto flex flex-col lg:max-w-[980px] xl:max-w-[1220px] my-6 px-6 lg:px-0">
+    <div className="mx-auto flex flex-col lg:max-w-[980px] xl:max-w-[1220px] my-6 px-6 lg:px-0 min-h-screen">
       {/* Render text only if search text is not empty */}
       {searchText && (
         <p className="text-md font-bold">{`Showing results for "${searchText}"`}</p>
