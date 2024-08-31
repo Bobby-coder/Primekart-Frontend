@@ -4,6 +4,7 @@ import ProductGridItem from "./productGridItem";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import InvalidCategory from "./InvalidCategory";
 
 function ProductGrid() {
   const [products, setProducts] = useState([]);
@@ -13,6 +14,8 @@ function ProductGrid() {
   const { sortBy, order } = useSelector((state) => state.sorting);
 
   useEffect(() => {
+    // Reset the error state whenever the category changes
+    setError(null);
     setLoading(true);
     axios
       .get(
@@ -20,13 +23,21 @@ function ProductGrid() {
       )
       .then((res) => {
         setLoading(false);
-        setProducts(res.data.products);
+        if (res.data.products.length === 0) {
+          setError({ message: "Invalid category" });
+        } else {
+          setProducts(res.data.products);
+        }
       })
       .catch((err) => {
         setLoading(false);
         setError(err);
       });
   }, [selectedCategory, sortBy, order]);
+
+  if (error) {
+    return <InvalidCategory />;
+  }
 
   return (
     <ScrollArea className="h-[calc(100vh-180px)]">
@@ -35,7 +46,7 @@ function ProductGrid() {
           <p>Loading...</p>
         ) : error ? (
           <div className="text-center">
-            {error?.data?.message || "Something went wrong"}
+            {error.data?.message || "Something went wrong"}
           </div>
         ) : (
           <>
