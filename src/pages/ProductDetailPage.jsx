@@ -24,6 +24,7 @@ import toast from "react-hot-toast";
 import AddedToCartToast from "@/components/customToasts/AddedToCartToast";
 import { getAmountInINR } from "@/utils/getAmountInINR";
 import CopyToClipboard from "react-copy-to-clipboard";
+import InvalidProduct from "@/components/category/InvalidProduct";
 
 function ProductDetailPage() {
   const [quantity, setQuantity] = useState(1);
@@ -39,14 +40,22 @@ function ProductDetailPage() {
     axios
       .get(`https://dummyjson.com/products/${productId}`)
       .then((res) => {
-        setProductData(res.data);
         setLoading(false);
+        if (res.data === null) {
+          setError({ message: "Invalid product Id" });
+        } else {
+          setProductData(res.data);
+        }
       })
       .catch((err) => {
         setLoading(false);
         setError(err);
       });
   }, [productId]);
+
+  if (error) {
+    return <InvalidProduct />;
+  }
 
   // Calculate total rating by adding all ratings
   const totalRatings = productData.reviews?.reduce(
@@ -96,7 +105,7 @@ function ProductDetailPage() {
       {loading ? (
         <h1>Loading...</h1>
       ) : error ? (
-        <p>{error.data.message || "Something went wrong"}</p>
+        <p>{error.data?.message || "Something went wrong"}</p>
       ) : (
         <div className="p-6 mx-auto flex flex-col gap-10 lg:flex-row lg:max-w-7xl">
           {/*images*/}
