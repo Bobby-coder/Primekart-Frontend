@@ -15,7 +15,6 @@ function WishlistItem({
   const dispatch = useDispatch();
   const originalPrice = getOriginalPrice(discountPercentage, price);
   const navigate = useNavigate();
-  //console.log({category})
 
   // Handler to remove item from wishlist
   function handleRemove() {

@@ -26,7 +26,9 @@ function ProductGridItem({
 
   // Handler to add item to cart
   function handleAddtoCart() {
-    dispatch(addToCart({ id, title, thumbnail, price, discountPercentage }));
+    dispatch(
+      addToCart({ id, title, thumbnail, price: priceInINR, discountPercentage })
+    );
     //
     toast.custom((t) => (
       <AddedToCartToast t={t} thumbnail={thumbnail} title={title} />
@@ -36,7 +38,7 @@ function ProductGridItem({
   // drag product to cart or wishlist
   const [{ isDragging }, drop] = useDrag({
     type: "PRODUCT",
-    item: { id, title, thumbnail, price, discountPercentage },
+    item: { id, title, thumbnail, price: priceInINR, discountPercentage },
     collect: (monitor) => ({ isDragging: monitor.isDragging() }),
   });
 
@@ -87,7 +89,14 @@ function ProductGridItem({
       {/*Wishlist Icon*/}
       <WishlistIcon
         productId={id}
-        product={{ id, title, thumbnail, price, discountPercentage, category }}
+        product={{
+          id,
+          title,
+          thumbnail,
+          price: priceInINR,
+          discountPercentage,
+          category,
+        }}
         position="absolute top-2 right-2"
       />
     </div>

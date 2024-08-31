@@ -1,7 +1,6 @@
 import { getOriginalPrice } from "@/utils/getOriginalPrice";
 import { Button } from "../ui/button";
 import QuantityInput from "./QuantityInput";
-import { getAmountInINR } from "@/utils/getAmountInINR";
 import { removeFromCart } from "@/store/features/cart/cartSlice";
 import { useDispatch } from "react-redux";
 import { addToSavedItems } from "@/store/features/saveForLater/saveForLaterSlice";
@@ -11,8 +10,7 @@ import RemovedFromCart from "../customToasts/RemovedFromCart";
 function CartItem({
   cart: { id, title, thumbnail, quantity, price, discountPercentage },
 }) {
-  const priceInINR = getAmountInINR(price);
-  const originalPrice = getOriginalPrice(discountPercentage, priceInINR);
+  const originalPrice = getOriginalPrice(discountPercentage, price);
   const dispatch = useDispatch();
 
   // Handler to remove item from cart
@@ -54,7 +52,7 @@ function CartItem({
             <p className="line-through text-muted-foreground text-[14px]">
               Rs.{originalPrice * quantity}
             </p>
-            <p className="text-lg font-bold">Rs.{priceInINR * quantity} </p>
+            <p className="text-lg font-bold">Rs.{price * quantity} </p>
             <p className="text-red-500 text-[14px]">
               ({discountPercentage}% OFF)
             </p>
@@ -70,7 +68,7 @@ function CartItem({
             ₹{originalPrice * quantity}
           </p>
           <p className="text-md font-bold mb-[-1px]">
-            ₹{priceInINR * quantity}{" "}
+            ₹{price * quantity}
           </p>
           <p className="text-red-500 text-[12px] self-end">
             ({discountPercentage}% OFF)

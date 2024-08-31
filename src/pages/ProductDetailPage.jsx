@@ -22,6 +22,7 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "@/store/features/cart/cartSlice";
 import toast from "react-hot-toast";
 import AddedToCartToast from "@/components/customToasts/AddedToCartToast";
+import { getAmountInINR } from "@/utils/getAmountInINR";
 
 function ProductDetailPage() {
   const [productData, setProductData] = useState({});
@@ -46,19 +47,21 @@ function ProductDetailPage() {
   }, [productId]);
 
   // Calculate total rating by adding all ratings
-  const totalRatings = productData?.reviews?.reduce(
+  const totalRatings = productData.reviews?.reduce(
     (acc, currReview) => acc + currReview.rating,
     0
   );
 
+  const priceInINR = getAmountInINR(productData.price);
+
   // calculate original price
   const originalPrice = getOriginalPrice(
-    productData?.discountPercentage,
-    productData?.price
+    productData.discountPercentage,
+    priceInINR
   );
 
   // Capitalized brand name
-  const capitalizedCategory = slugIntoName(productData?.category);
+  const capitalizedCategory = slugIntoName(productData.category);
 
   // Handler to add product to cart
   function handleAddToCart() {
@@ -89,7 +92,7 @@ function ProductDetailPage() {
       ) : (
         <div className="p-6 mx-auto flex flex-col gap-10 lg:flex-row lg:max-w-7xl">
           {/*images*/}
-          <ImageSection images={productData?.images} />
+          <ImageSection images={productData.images} />
 
           {/*details*/}
           <div className="flex flex-col gap-8">
@@ -130,20 +133,20 @@ function ProductDetailPage() {
               <div className="flex flex-col flex-wrap gap-4 items-start">
                 {/*Price & discount*/}
                 <p className="text-3xl font-semibold">
-                  ₹{productData?.price}{" "}
+                  ₹{priceInINR}{" "}
                   <span className="line-through text-muted-foreground text-xl">
                     ₹{originalPrice}
                   </span>
                   <span className="text-red-500 text-sm ml-2">
-                    {productData?.discountPercentage}% off
+                    {productData.discountPercentage}% off
                   </span>
                 </p>
 
                 {/*Rating*/}
                 <RatingsInfo
-                  avgRating={productData?.rating}
+                  avgRating={productData.rating}
                   totalRatings={totalRatings}
-                  totalReviews={productData?.reviews?.length}
+                  totalReviews={productData.reviews?.length}
                 />
               </div>
 
@@ -175,8 +178,8 @@ function ProductDetailPage() {
                     {Array.from(
                       { length: productData.stock },
                       (_, index) => index + 1
-                    ).map((num) => (
-                      <SelectItem key={crypto.randomUUID()} value={num}>
+                    ).map((num, i) => (
+                      <SelectItem key={i} value={num}>
                         {num}
                       </SelectItem>
                     ))}
@@ -210,7 +213,7 @@ function ProductDetailPage() {
             {/*reviews */}
             <ReviewSection
               reviews={productData.reviews}
-              avgRating={productData?.rating}
+              avgRating={productData.rating}
               totalRatings={totalRatings}
             />
           </div>

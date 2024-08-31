@@ -2,14 +2,13 @@ import { ShieldCheck } from "lucide-react";
 import { Separator } from "../ui/separator";
 import { useSelector } from "react-redux";
 import { getTotalDiscount } from "@/utils/getTotalDiscount";
-import { getAmountInINR } from "@/utils/getAmountInINR";
 
 function OrderDetails({ extraClasses }) {
   const { items, totalAmount, totalItems, totalOriginalPrice } = useSelector(
     (state) => state.cart
   );
-  const totalAmountInINR = getAmountInINR(totalAmount);
-  const totalOriginalPriceInINR = getAmountInINR(totalOriginalPrice);
+  //const totalAmountInINR = getAmountInINR(totalAmount);
+  //const totalOriginalPriceInINR = getAmountInINR(totalOriginalPrice);
   const totalDiscount = getTotalDiscount(items);
 
   return (
@@ -24,7 +23,7 @@ function OrderDetails({ extraClasses }) {
         {/*total amount*/}
         <div className="flex justify-between">
           <span className="text-gray-600">Price ({totalItems} items)</span>
-          <span className="text-gray-800">₹{totalOriginalPriceInINR}</span>
+          <span className="text-gray-800">₹{totalOriginalPrice}</span>
         </div>
 
         {/*discount*/}
@@ -56,7 +55,7 @@ function OrderDetails({ extraClasses }) {
             Total Amount
           </span>
           <span className="text-lg font-semibold text-gray-800">
-            ₹{totalAmountInINR}
+            ₹{totalAmount}
           </span>
         </div>
 
