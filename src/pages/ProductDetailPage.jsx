@@ -26,6 +26,7 @@ import { getAmountInINR } from "@/utils/getAmountInINR";
 import CopyToClipboard from "react-copy-to-clipboard";
 
 function ProductDetailPage() {
+  const [quantity, setQuantity] = useState(1);
   const [productData, setProductData] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -64,6 +65,11 @@ function ProductDetailPage() {
   // Capitalized brand name
   const capitalizedCategory = slugIntoName(productData.category);
 
+  // handler to update quantity
+  function handleQuantity(val) {
+    setQuantity(val);
+  }
+
   // Handler to add product to cart
   function handleAddToCart() {
     dispatch(
@@ -71,8 +77,9 @@ function ProductDetailPage() {
         id: productData.id,
         title: productData.title,
         thumbnail: productData.thumbnail,
-        price: productData.price,
+        price: priceInINR,
         discountPercentage: productData.discountPercentage,
+        quantity,
       })
     );
     //
@@ -117,7 +124,7 @@ function ProductDetailPage() {
                       id: productData.id,
                       title: productData.title,
                       thumbnail: productData.thumbnail,
-                      price: productData.price,
+                      price: priceInINR,
                       discountPercentage: productData.discountPercentage,
                       category: productData.category,
                     }}
@@ -176,7 +183,10 @@ function ProductDetailPage() {
               {/*Quantity*/}
               <div className="flex items-center gap-2 mb-4">
                 <Label className="text-base">Quantity</Label>
-                <Select defaultValue={1} onValueChange>
+                <Select
+                  defaultValue={1}
+                  onValueChange={(val) => handleQuantity(val)}
+                >
                   <SelectTrigger className="w-24">
                     <SelectValue placeholder="Select" />
                   </SelectTrigger>

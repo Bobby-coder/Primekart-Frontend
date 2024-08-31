@@ -55,9 +55,12 @@ export const cartSlice = createSlice({
       const existingItem = state.items.find((item) => item.id === newItem.id);
 
       if (existingItem) {
-        existingItem.quantity += 1;
+        existingItem.quantity += newItem.quantity;
       } else {
-        state.items.push({ ...newItem, quantity: 1 });
+        state.items.push({
+          ...newItem,
+          quantity: newItem.quantity ? newItem.quantity : 1,
+        });
       }
 
       // recalculate totals whenever items list is updated
