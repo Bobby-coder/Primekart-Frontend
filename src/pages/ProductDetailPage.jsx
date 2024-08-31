@@ -23,6 +23,7 @@ import { addToCart } from "@/store/features/cart/cartSlice";
 import toast from "react-hot-toast";
 import AddedToCartToast from "@/components/customToasts/AddedToCartToast";
 import { getAmountInINR } from "@/utils/getAmountInINR";
+import CopyToClipboard from "react-copy-to-clipboard";
 
 function ProductDetailPage() {
   const [productData, setProductData] = useState({});
@@ -108,7 +109,7 @@ function ProductDetailPage() {
                 </div>
 
                 {/*Icons*/}
-                <div className="ml-auto flex flex-wrap gap-4">
+                <div className="ml-auto flex items-center">
                   {/*Wishlist Icon*/}
                   <WishlistIcon
                     productId={Number(productId)}
@@ -121,10 +122,15 @@ function ProductDetailPage() {
                       category: productData.category,
                     }}
                   />
-                  {/*Share Icon*/}
-                  <button className="px-2.5 py-1.5 bg-gray-100 text-xs text-gray-800 rounded-md flex items-center">
-                    <Share />
-                  </button>
+                  {/*Share Icon to copy link*/}
+                  <CopyToClipboard
+                    text={window.location.href}
+                    onCopy={() => toast.success("Link copied")}
+                  >
+                    <button className="px-2.5 py-1.5 text-xs text-gray-400 rounded-md flex items-center">
+                      <Share />
+                    </button>
+                  </CopyToClipboard>
                 </div>
               </div>
 
