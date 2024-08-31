@@ -8,25 +8,23 @@ function CartItemList() {
 
   return (
     <div className="flex justify-between">
-      <div className="border w-[68%]">
+      <div className="border w-full lg:w-[68%]">
         <div className="border-b p-4">
           <h2 className="font-semibold text-lg">Shopping Cart</h2>
         </div>
-        <div className="p-4">
-          <div className="grid gap-4">
-            {items.map((cart) => {
-              return (
-                <div key={cart.id}>
-                  <CartItem cart={cart} />
-                  <Separator />
-                </div>
-              );
-            })}
-          </div>
+        <div className="grid gap-4">
+          {items.map((cart) => {
+            return (
+              <div key={cart.id}>
+                <CartItem cart={cart} />
+                <Separator />
+              </div>
+            );
+          })}
         </div>
       </div>
 
-      <OrderDetails />
+      <OrderDetails extraClasses={"hidden lg:flex "}/>
     </div>
   );
 }

@@ -36,7 +36,7 @@ function CartItem({
 
   return (
     <div className="flex flex-col gap-6 p-4">
-      <div className="flex items-center gap-4">
+      <div className="flex items-center px-4 gap-4">
         {/*Image*/}
         <img
           alt="Product image"
@@ -48,9 +48,9 @@ function CartItem({
 
         <div className="flex flex-col gap-3">
           {/*Name*/}
-          <p className="font-semibold">{title}</p>
-          {/*Price & Discount*/}
-          <div className="flex items-center gap-1">
+          <p className="text-sm font-medium w-full">{title}</p>
+          {/*Price & Discount for larger screens*/}
+          <div className="hidden lg:flex items-center gap-1">
             <p className="line-through text-muted-foreground text-[14px]">
               Rs.{originalPrice * quantity}
             </p>
@@ -62,25 +62,43 @@ function CartItem({
         </div>
       </div>
 
-      <div className="flex gap-[6px] items-center">
+      <div className="flex gap-[6px] lg:items-center flex-col lg:flex-row px-4">
         <QuantityInput quantity={quantity} id={id} />
-        <Button
-          variant="ghost"
-          className="text-md font-semibold"
-          onClick={handleSaveForLater}
-        >
-          SAVE FOR LATER
-        </Button>
-        <Button
-          variant="ghost"
-          className="text-md font-semibold"
-          onClick={handleRemoveFromCart}
-        >
-          REMOVE
-        </Button>
-        <Button variant="ghost" className="text-md font-semibold">
-          SEE MORE LIKE THESE
-        </Button>
+        {/*Price and discount for smaller screens*/}
+        <div className="flex gap-2 lg:hidden my-2">
+          <p className="line-through text-muted-foreground text-[12px] self-end">
+            ₹{originalPrice * quantity}
+          </p>
+          <p className="text-md font-bold mb-[-1px]">
+            ₹{priceInINR * quantity}{" "}
+          </p>
+          <p className="text-red-500 text-[12px] self-end">
+            ({discountPercentage}% OFF)
+          </p>
+        </div>
+
+        <div className="flex flex-wrap">
+          <Button
+            variant="regular"
+            className="text-sm font-semibold lg:text-md lg:font-semibold p-0 mr-4 lg:mx-4"
+            onClick={handleSaveForLater}
+          >
+            SAVE FOR LATER
+          </Button>
+          <Button
+            variant="regular"
+            className="text-sm font-semibold lg:text-md lg:font-semibold p-0 mr-4"
+            onClick={handleRemoveFromCart}
+          >
+            REMOVE
+          </Button>
+          <Button
+            variant="regular"
+            className="text-sm font-semibold lg:text-md lg:font-semibold p-0 "
+          >
+            SEE MORE LIKE THESE
+          </Button>
+        </div>
       </div>
     </div>
   );

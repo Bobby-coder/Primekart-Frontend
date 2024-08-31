@@ -63,9 +63,9 @@ function WishlistItem({
 
         {/*Price & Discount*/}
         <p className="text-sm font-semibold">
-          Rs.{price}{" "}
-          <span className="line-through text-muted-foreground">
-            Rs.{originalPrice}
+          ₹{price}
+          <span className="line-through text-muted-foreground mx-1">
+            ₹{originalPrice}
           </span>
           <span className="text-red-500">({discountPercentage}% OFF)</span>
         </p>

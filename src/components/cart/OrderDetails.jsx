@@ -4,14 +4,16 @@ import { useSelector } from "react-redux";
 import { getTotalDiscount } from "@/utils/getTotalDiscount";
 import { getAmountInINR } from "@/utils/getAmountInINR";
 
-function OrderDetails() {
-  const { items, totalAmount, totalItems, totalOriginalPrice } = useSelector((state) => state.cart);
+function OrderDetails({ extraClasses }) {
+  const { items, totalAmount, totalItems, totalOriginalPrice } = useSelector(
+    (state) => state.cart
+  );
   const totalAmountInINR = getAmountInINR(totalAmount);
-  const totalOriginalPriceInINR = getAmountInINR(totalOriginalPrice)
+  const totalOriginalPriceInINR = getAmountInINR(totalOriginalPrice);
   const totalDiscount = getTotalDiscount(items);
 
   return (
-    <div className="flex flex-col gap-8 w-[30%]">
+    <div className={`flex-col gap-8 w-full lg:w-[30%] ${extraClasses}`}>
       <div className="flex flex-col gap-4 border p-4">
         <h3 className="tracking-tight text-lg font-semibold text-gray-700">
           PRICE DETAILS
@@ -64,8 +66,7 @@ function OrderDetails() {
           You will save ₹{totalDiscount} on this order
         </p>
       </div>
-
-      <div className="flex items-center space-x-2">
+      <div className="flex items-center space-x-2 my-2 lg:my-0">
         <ShieldCheck size={30} strokeWidth={1.25} />
         <p className="text-sm text-gray-600">
           Safe and Secure Payments. Easy returns. 100% Authentic products.
