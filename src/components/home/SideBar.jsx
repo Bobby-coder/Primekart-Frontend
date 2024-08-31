@@ -20,7 +20,7 @@ function SideBar() {
 
   return (
     <Sheet>
-      <SheetTrigger className="flex gap-1 items-center mr-8">
+      <SheetTrigger className="flex gap-1 items-center mr-3 md:mr-8">
         <Menu />
         All
       </SheetTrigger>

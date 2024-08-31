@@ -16,7 +16,15 @@ function CategoryNavbar() {
     "Mens Shirts",
     "Mens Shoes",
     "Mens Watches",
-    "Mobile Accessories",
+  ];
+
+  const categoriesForMidScreens = [
+    "Beauty",
+    "Fragrances",
+    "Furniture",
+    "Groceries",
+    "Home Decoration",
+    "Tablets",
   ];
 
   // handler to navigate to category page
@@ -26,20 +34,40 @@ function CategoryNavbar() {
   }
 
   return (
-    <div className="w-full px-6 md:px-8 lg:px-10 flex bg-[#232F3E] text-white ">
+    <div className="hidden w-full px-6 md:px-8 lg:px-10 md:flex bg-[#232F3E] text-white overflow-hidden">
       <SideBar />
-      {categories.map((category) => (
-        <Button
-          key={crypto.randomUUID()}
-          variant="link"
-          className="p-0 text-white mr-8"
-          onClick={() => {
-            handleNavigate(category);
-          }}
-        >
-          {category}
-        </Button>
-      ))}
+
+      {/*For large screens*/}
+      <div className="hidden xl:flex">
+        {categories.map((category) => (
+          <Button
+            key={crypto.randomUUID()}
+            variant="link"
+            className="p-0 text-white mr-8"
+            onClick={() => {
+              handleNavigate(category);
+            }}
+          >
+            {category}
+          </Button>
+        ))}
+      </div>
+
+      {/*For mid screens*/}
+      <div className="flex xl:hidden">
+        {categoriesForMidScreens.map((category) => (
+          <Button
+            key={crypto.randomUUID()}
+            variant="link"
+            className="p-0 text-white mr-8"
+            onClick={() => {
+              handleNavigate(category);
+            }}
+          >
+            {category}
+          </Button>
+        ))}
+      </div>
     </div>
   );
 }

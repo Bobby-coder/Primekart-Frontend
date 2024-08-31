@@ -29,7 +29,7 @@ export default function HomePage() {
     <div className="flex flex-col min-h-[100dvh]">
       <main className="flex-1">
         {/*Banner*/}
-        <section className="bg-primary py-12 md:py-16 lg:py-20 px-6 md:px-8 lg:px-10">
+        <section className="bg-primary py-6 md:py-16 lg:py-20 px-6 md:px-8 lg:px-10">
           <div className="container mx-auto grid md:grid-cols-2 gap-8 items-center">
             <div className="space-y-4">
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary-foreground">
@@ -65,7 +65,7 @@ export default function HomePage() {
                 Browse our selection of top-selling product categories.
               </p>
             </div>
-            
+
             {/* Category grid */}
             <div className="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-10 gap-4 mt-8">
               {items.map(({ name, thumbnail }) => (
