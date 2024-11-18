@@ -1,8 +1,13 @@
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { CircleUserRound, Menu } from "lucide-react";
-import { Separator } from "../ui/separator";
-import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { fetchCategories } from "@/store/features/category/categorySlice";
@@ -25,11 +30,15 @@ function SideBar() {
         All
       </SheetTrigger>
       <SheetContent side="left" className="p-0">
+        <SheetHeader>
+          <SheetTitle></SheetTitle>
+          <SheetDescription></SheetDescription>
+        </SheetHeader>
         <ScrollArea className="h-dvh relative">
           {/* Header */}
           <div className="h-[50px] p-4 bg-primary flex gap-2 items-center text-white absolute top-0 right-0 w-full">
             <CircleUserRound />
-            <p>Hello, User</p>
+            <p>Hello, Guest</p>
           </div>
 
           {/* All categories list */}
@@ -44,22 +53,6 @@ function SideBar() {
                 />
               );
             })}
-          </div>
-
-          <Separator />
-
-          {/* Account settings list */}
-          <div className="p-4 flex flex-col gap-3">
-            <h1 className="font-bold text-lg">Help & Settings</h1>
-            <Link>
-              <p>Your Account</p>
-            </Link>
-            <Link>
-              <p>Customer Service</p>
-            </Link>
-            <Link>
-              <p>Sign out</p>
-            </Link>
           </div>
         </ScrollArea>
       </SheetContent>
