@@ -5,6 +5,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import InvalidCategory from "./InvalidCategory";
+import ProductSkeleton from "../skeletons/ProductSkeleton";
 
 function ProductGrid() {
   const [products, setProducts] = useState([]);
@@ -43,7 +44,11 @@ function ProductGrid() {
     <ScrollArea className="h-[calc(100vh-180px)]">
       <div className="grid grid-cols-2 gap-2 p-2 bg-[#f4f6fb] lg:grid-cols-5">
         {loading ? (
-          <p>Loading...</p>
+          <>
+            {Array.from({ length: 4 }).map(() => (
+              <ProductSkeleton key={crypto.randomUUID()} />
+            ))}
+          </>
         ) : error ? (
           <div className="text-center">
             {error.data?.message || "Something went wrong"}

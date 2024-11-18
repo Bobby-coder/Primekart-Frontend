@@ -25,6 +25,7 @@ import AddedToCartToast from "@/components/customToasts/AddedToCartToast";
 import { getAmountInINR } from "@/utils/getAmountInINR";
 import CopyToClipboard from "react-copy-to-clipboard";
 import InvalidProduct from "@/components/category/InvalidProduct";
+import ProductDetailSkeleton from "@/components/skeletons/ProductDetailSkeleton";
 
 function ProductDetailPage() {
   const [quantity, setQuantity] = useState(1);
@@ -103,7 +104,7 @@ function ProductDetailPage() {
   return (
     <>
       {loading ? (
-        <h1>Loading...</h1>
+        <ProductDetailSkeleton />
       ) : error ? (
         <p>{error.data?.message || "Something went wrong"}</p>
       ) : (

@@ -3,6 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import notFoundImage from "../assets/no-product-found.png";
+import ProductSkeleton from "@/components/skeletons/ProductSkeleton";
 
 function SearchPage() {
   const { searchText } = useSelector((state) => state.search);
@@ -41,7 +42,11 @@ function SearchPage() {
 
       <div className="grid grid-cols-2 gap-2 p-2 lg:grid-cols-5">
         {loading ? (
-          <p>Loading...</p>
+          <>
+            {Array.from({ length: 4 }).map(() => (
+              <ProductSkeleton key={crypto.randomUUID()} />
+            ))}
+          </>
         ) : error ? (
           <p>{error.data?.message || "Something went wrong"}</p>
         ) : products.length === 0 ? (
